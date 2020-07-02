@@ -10,8 +10,11 @@ _configs = configs_parser.get_config()
 
 name = _configs.get('name')
 description = _configs.get('description')
+# 是否在build之前先拉取最新代码
 git_enable = _configs.get('git_enable', True)
+# 启用android构建，默认开启
 android_enable = _configs.get('android_enable', True)
+# 启用iOS构建，默认开启
 ios_enable = _configs.get('ios_enable', True)
 
 
