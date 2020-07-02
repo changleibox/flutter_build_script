@@ -101,7 +101,9 @@ class IOSBuilder(Builder):
     @staticmethod
     def __xcodebuild_export_archive_command(build_type):
         assert build_type, 'build_type 不能为空'
-        export_options_plist_path = os.path.join(utils.root_path(), 'assets', 'ExportOptions%s.plist' % build_type)
+        export_options_name = IOSBuildConfig.export_options.get(build_type.lower())
+        assert export_options_name, 'export_options_name 不能为空，请在配置文件设置你的exportOptionsPlist'
+        export_options_plist_path = os.path.join(utils.root_path(), 'assets', export_options_name)
         return CommandBuilder('xcodebuild -exportArchive', prefix='-') \
             .append('archivePath', Paths.xcarchive_path) \
             .append('exportPath', Paths.ipa_export_path) \

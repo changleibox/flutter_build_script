@@ -41,7 +41,8 @@
     "dart_define": "xxx",
     "performance_measurement_file": "xxx",
     "simulator": true,
-    "codesign": true
+    "codesign": true,
+    "export_options": {}
   },
   "app_store_config": {
     "apple_id": "xxx",

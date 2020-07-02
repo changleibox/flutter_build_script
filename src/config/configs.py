@@ -93,7 +93,7 @@ class AndroidBuildConfig(object):
 class IOSBuildConfig(object):
     # iOS构建配置
     build_config = _configs.get('ios_build_config')
-    # 构建类型[Debug|Profile|Release]
+    # 构建类型[debug|profile|release]
     build_type = build_config.get('build_type')
     # 导出类型[export|pgy|appStore]
     export_type = build_config.get('export_type')
@@ -142,6 +142,12 @@ class IOSBuildConfig(object):
     # 对应用程序包进行代码签名（仅适用于设备生成）。
     # （默认为打开）
     codesign = build_config.get('codesign')
+    # exportOptionsPlist，一个键值对，放在项目assets目录下，build_type对应一个exportOptionsPlist，
+    # 例如：
+    # export_options:
+    #   debug: ExportOptionsDebug.plist
+    #   release: ExportOptionsRelease.plist
+    export_options = build_config.get('export_options')
 
 
 class AppStoreConfig(object):
