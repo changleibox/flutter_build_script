@@ -8,7 +8,9 @@ from src.config import configs_parser
 
 _configs = configs_parser.get_config()
 
+# 脚本名字
 name = _configs.get('name')
+# 脚本描述
 description = _configs.get('description')
 # 是否在build之前先拉取最新代码
 git_enable = _configs.get('git_enable', True)
