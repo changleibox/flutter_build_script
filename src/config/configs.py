@@ -28,10 +28,11 @@ class Config(metaclass=abc.ABCMeta):
     def check_configs(): ...
 
     @staticmethod
-    def check_config(field, args_name):
-        explain = '请在\'assets/configs.yaml\'文件中设置参数 %s' % args_name
-        assert field, explain
-        log.info('%s：%s' % (args_name, field))
+    def check_config(args, args_name, args_type, nullable=True):
+        if not nullable:
+            assert args, '请在\'assets/configs.yaml\'文件中设置参数 %s' % args_name
+        assert type(args) == args_type, '%s 应该是 %s类型' % (args_name, args_type)
+        log.info('%s：%s' % (args_name, args))
 
 
 class GitConfig(Config):
@@ -52,13 +53,13 @@ class GitConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config.check_config(GitConfig.git_config, 'git_config')
-        Config.check_config(GitConfig.remote, 'remote')
-        Config.check_config(GitConfig.branch, 'branch')
-        Config.check_config(GitConfig.local_dir, 'local_dir')
-        Config.check_config(GitConfig.username, 'username')
-        Config.check_config(GitConfig.password, 'password')
-        Config.check_config(GitConfig.email, 'email')
+        Config.check_config(GitConfig.git_config, 'git_config', dict, False)
+        Config.check_config(GitConfig.remote, 'remote', str, False)
+        Config.check_config(GitConfig.branch, 'branch', str, False)
+        Config.check_config(GitConfig.local_dir, 'local_dir', str, False)
+        Config.check_config(GitConfig.username, 'username', str, False)
+        Config.check_config(GitConfig.password, 'password', str, False)
+        Config.check_config(GitConfig.email, 'email', str, False)
 
 
 class AndroidBuildConfig(Config):
@@ -126,9 +127,9 @@ class AndroidBuildConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config.check_config(AndroidBuildConfig.build_config, 'build_config')
-        Config.check_config(AndroidBuildConfig.build_type, 'build_type')
-        Config.check_config(AndroidBuildConfig.export_type, 'export_type')
+        Config.check_config(AndroidBuildConfig.build_config, 'build_config', dict, False)
+        Config.check_config(AndroidBuildConfig.build_type, 'build_type', str, False)
+        Config.check_config(AndroidBuildConfig.export_type, 'export_type', str, False)
 
 
 class IOSBuildConfig(Config):
@@ -192,10 +193,10 @@ class IOSBuildConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config.check_config(IOSBuildConfig.build_config, 'build_config')
-        Config.check_config(IOSBuildConfig.build_type, 'build_type')
-        Config.check_config(IOSBuildConfig.export_type, 'export_type')
-        Config.check_config(IOSBuildConfig.export_options, 'export_options')
+        Config.check_config(IOSBuildConfig.build_config, 'build_config', dict, False)
+        Config.check_config(IOSBuildConfig.build_type, 'build_type', str, False)
+        Config.check_config(IOSBuildConfig.export_type, 'export_type', str, False)
+        Config.check_config(IOSBuildConfig.export_options, 'export_options', dict, False)
 
 
 class AppStoreConfig(Config):
@@ -215,12 +216,12 @@ class AppStoreConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config.check_config(AppStoreConfig.app_store_config, 'app_store_config')
-        Config.check_config(AppStoreConfig.apple_id, 'apple_id')
-        Config.check_config(AppStoreConfig.type, 'type')
-        Config.check_config(AppStoreConfig.api_key, 'api_key')
-        Config.check_config(AppStoreConfig.api_issuer, 'api_issuer')
-        Config.check_config(AppStoreConfig.output_format, 'output_format')
+        Config.check_config(AppStoreConfig.app_store_config, 'app_store_config', dict, False)
+        Config.check_config(AppStoreConfig.apple_id, 'apple_id', str, False)
+        Config.check_config(AppStoreConfig.type, 'type', str, False)
+        Config.check_config(AppStoreConfig.api_key, 'api_key', str, False)
+        Config.check_config(AppStoreConfig.api_issuer, 'api_issuer', str, False)
+        Config.check_config(AppStoreConfig.output_format, 'output_format', str, False)
 
 
 class PGYConfig(Config):
@@ -255,10 +256,10 @@ class PGYConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config.check_config(PGYConfig.pgy_config, 'pgy_config')
-        Config.check_config(PGYConfig.url, 'url')
-        Config.check_config(PGYConfig.api_key, 'api_key')
-        Config.check_config(PGYConfig.user_key, 'user_key')
+        Config.check_config(PGYConfig.pgy_config, 'pgy_config', dict, False)
+        Config.check_config(PGYConfig.url, 'url', str, False)
+        Config.check_config(PGYConfig.api_key, 'api_key', str, False)
+        Config.check_config(PGYConfig.user_key, 'user_key', str, False)
 
 
 class DingtalkConfig(Config):
@@ -280,20 +281,20 @@ class DingtalkConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config.check_config(DingtalkConfig.dingtalk_config, 'dingtalk_config')
-        Config.check_config(DingtalkConfig.url, 'url')
-        Config.check_config(DingtalkConfig.secret, 'secret')
-        Config.check_config(DingtalkConfig.access_key, 'access_key')
-        Config.check_config(DingtalkConfig.title, 'title')
+        Config.check_config(DingtalkConfig.dingtalk_config, 'dingtalk_config', dict, False)
+        Config.check_config(DingtalkConfig.url, 'url', str, False)
+        Config.check_config(DingtalkConfig.secret, 'secret', str, False)
+        Config.check_config(DingtalkConfig.access_key, 'access_key', str, False)
+        Config.check_config(DingtalkConfig.title, 'title', str, False)
 
 
 def check_configs():
     print_procossing('通用配置')
-    Config.check_config(name, 'name')
-    Config.check_config(description, 'description')
-    Config.check_config(git_enable, 'git_enable')
-    Config.check_config(android_enable, 'android_enable')
-    Config.check_config(ios_enable, 'ios_enable')
+    Config.check_config(name, 'name', str, False)
+    Config.check_config(description, 'description', str, False)
+    Config.check_config(git_enable, 'git_enable', bool, False)
+    Config.check_config(android_enable, 'android_enable', bool, False)
+    Config.check_config(ios_enable, 'ios_enable', bool, False)
     for subclass in Config.__subclasses__():
         print_procossing(subclass.__name__)
         getattr(subclass, 'check_configs')()
