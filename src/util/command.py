@@ -14,18 +14,20 @@ class CommandBuilder(object):
     def __init__(self, command_header, prefix='--'):
         self.__command_args = list()
         self.__command_args.append(command_header)
-        self.__line = prefix
+        self.__prefix = prefix
 
-    def append(self, k, v):
+    def append(self, k, v, prefix=None):
         if v is None:
             return self
+        prefix = prefix if prefix else self.__prefix
+        assert prefix, '请设置prefix'
         if type(v) == bool:
             if v:
-                self.__command_args.append('%s%s' % (self.__line, k))
+                self.__command_args.append('%s%s' % (prefix, k))
             else:
-                self.__command_args.append('%sno-%s' % (self.__line, k))
+                self.__command_args.append('%sno-%s' % (prefix, k))
         else:
-            self.__command_args.append('%s%s %s' % (self.__line, k, v))
+            self.__command_args.append('%s%s %s' % (prefix, k, v))
         return self
 
     def to_command(self):
