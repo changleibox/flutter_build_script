@@ -13,7 +13,6 @@ import urllib.parse
 import urllib.request
 
 from src.config import DingtalkConfig
-from src.util import log
 
 try:
     JSONDecodeError = json.decoder.JSONDecodeError
@@ -64,7 +63,7 @@ class DingtalkChatbot(object):
         request = urllib.request.Request(url=self.webhook_url, data=send_data, headers=header)  # 发送请求
 
         opener = urllib.request.urlopen(request)  # 将请求发回的数据构建成为文件格式
-        log.debug(opener.read())  # 打印返回的结果
+        return json.loads(opener.read())
 
     def send_text(self, msg, is_at_all=False, at_mobiles=None, at_dingtalk_ids=None, is_auto_at=True):
         """

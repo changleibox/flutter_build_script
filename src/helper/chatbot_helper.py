@@ -7,7 +7,7 @@ import os
 
 from src.config import PGYConfig, DingtalkConfig
 from src.plugin import DingtalkChatbot
-from src.util import utils
+from src.util import utils, log
 
 
 class ChatbotHelper(object):
@@ -20,8 +20,8 @@ class ChatbotHelper(object):
         if len(result_dict) == 0:
             return
         mark_down_texts = self.__resolve_mark_down_text(result_dict)
-        for mark_down_text in mark_down_texts:
-            self.chatbot.send_markdown(
+        for name, mark_down_text in mark_down_texts.items():
+            result = self.chatbot.send_markdown(
                 title=DingtalkConfig.title,
                 text=mark_down_text,
                 is_at_all=DingtalkConfig.is_at_all,
@@ -29,9 +29,10 @@ class ChatbotHelper(object):
                 at_dingtalk_ids=DingtalkConfig.at_dingtalk_ids,
                 is_auto_at=DingtalkConfig.is_auto_at,
             )
+            log.info('%s 通知成功：%s' % (name, result))
 
     def __resolve_mark_down_text(self, result_dict):
-        mark_down_texts = list()
+        mark_down_texts = dict()
 
         for name, result in result_dict.items():
             data = result['data']
@@ -51,6 +52,6 @@ class ChatbotHelper(object):
                 'buildPassword': PGYConfig.build_password,
             }
             mark_down_text = self.mark_down_text.format(**mark_down_params)
-            mark_down_texts.append(mark_down_text)
+            mark_down_texts[name] = mark_down_text
 
         return mark_down_texts
