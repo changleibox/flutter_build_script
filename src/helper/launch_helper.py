@@ -9,7 +9,7 @@ from src.builder import ApkBuilder
 from src.builder import IOSBuilder
 from src.config import configs
 from src.helper import ChatbotHelper, GitHelper
-from src.util import log, utils
+from src.util import log, print_procossing
 
 
 class LaunchHelper(object):
@@ -21,14 +21,14 @@ class LaunchHelper(object):
         log.verbose(configs.description)
 
         try:
-            utils.print_procossing('开始检查配置')
+            print_procossing('开始检查配置')
             configs.check_configs()
         except AssertionError as error:
             log.error(error)
             return
 
         if configs.git_enable:
-            utils.print_procossing('开始拉取代码')
+            print_procossing('开始拉取代码')
             git_helper = GitHelper()
             result = git_helper.clone()
             if result == 0:
@@ -49,14 +49,14 @@ class LaunchHelper(object):
 
         result_dict = dict()
         for builder in builders:
-            utils.print_procossing('开始构建%s' % builder.name)
+            print_procossing('开始构建%s' % builder.name)
             result = builder.release()
             if result is None or result['code'] != 0:
                 continue
             result_dict[builder.name] = result
 
         if len(result_dict) > 0:
-            utils.print_procossing('构建完成，正在通知测试人员')
+            print_procossing('构建完成，正在通知测试人员')
             chatbot_helper = ChatbotHelper()
             chatbot_helper.notify(result_dict)
         else:
@@ -65,6 +65,6 @@ class LaunchHelper(object):
     @staticmethod
     def __global_excepthook(exctype, value, traceback):
         if exctype == KeyboardInterrupt:
-            utils.print_procossing('程序被动终止')
+            print_procossing('程序被动终止')
             return
         sys.__excepthook__(exctype, value, traceback)
