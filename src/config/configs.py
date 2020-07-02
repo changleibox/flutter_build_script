@@ -8,6 +8,12 @@ from src.config import configs_parser
 
 _configs = configs_parser.get_config()
 
+name = _configs.get('name')
+description = _configs.get('description')
+git_enable = _configs.get('git_enable', True)
+android_enable = _configs.get('android_enable', True)
+ios_enable = _configs.get('ios_enable', True)
+
 
 class GitConfig(object):
     # git配置

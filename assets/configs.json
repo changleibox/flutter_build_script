@@ -1,6 +1,9 @@
 {
   "name": "程序名字",
   "description": "程序描述",
+  "git_enable": true,
+  "android_enable": true,
+  "ios_enable": true,
   "git_config": {
     "remote": "xxx",
     "branch": "xxx",

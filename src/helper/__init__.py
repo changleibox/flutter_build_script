@@ -5,3 +5,4 @@
 # Created by changlei on 2020/6/29.
 from src.helper.chatbot_helper import ChatbotHelper
 from src.helper.git_helper import GitHelper
+from src.helper.launch_helper import LaunchHelper
