@@ -49,6 +49,8 @@ class LaunchHelper(object):
         if len(result_dict) > 0:
             chatbot_helper = ChatbotHelper()
             chatbot_helper.notify(result_dict)
+        else:
+            log.error('构建失败，请检查后重试')
 
     @staticmethod
     def __global_excepthook(exctype, value, traceback):
