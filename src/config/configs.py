@@ -142,7 +142,7 @@ class IOSBuildConfig(object):
     # 对应用程序包进行代码签名（仅适用于设备生成）。
     # （默认为打开）
     codesign = build_config.get('codesign')
-    # exportOptionsPlist，一个键值对，放在项目assets目录下，build_type对应一个exportOptionsPlist，
+    # exportOptionsPlist，一个键值对，放在项目assets目录下，build_type对应一个exportOptionsPlist。
     # 例如：
     # export_options:
     #   debug: ExportOptionsDebug.plist
