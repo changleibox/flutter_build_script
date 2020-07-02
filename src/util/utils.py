@@ -101,6 +101,10 @@ def print_path_not_exist(path):
     log.normal('The specified project directory \'{}\' does not exist.'.format(path))
 
 
+def print_procossing(text):
+    log.error('\n\n****** %s ******' % text)
+
+
 if __name__ == '__main__':
     print(convert_fuke_size(71025065))
     print(convert_time('2020-06-29 14:57:00'))
