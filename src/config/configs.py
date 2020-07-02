@@ -28,7 +28,7 @@ class Config(metaclass=abc.ABCMeta):
 
     @staticmethod
     def _check_config(field, args_name):
-        explain = '请配置配置文件中设置参数 %s' % args_name
+        explain = '请在\'assets/configs.yaml\'文件中设置参数 %s' % args_name
         assert field, explain
 
 
