@@ -25,14 +25,20 @@ ios_enable = _configs.get('ios_enable', True)
 class Config(metaclass=abc.ABCMeta):
     @staticmethod
     @abc.abstractmethod
-    def check_configs(): ...
+    def check_configs():
+        ...
 
     @staticmethod
     def check_config(args, args_name, args_type, nullable=True):
         if not nullable:
             assert args, '请在\'assets/configs.yaml\'文件中设置参数 %s' % args_name
-        assert type(args) == args_type, '%s 应该是 %s类型' % (args_name, args_type)
+        if args is not None:
+            assert type(args) == args_type, '%s 类型错误 %s，应该是 %s类型' % (args_name, type(args), args_type)
         log.info('%s：%s' % (args_name, args))
+
+    @staticmethod
+    def get_config(configs, attr_name, default=None):
+        return configs.get(attr_name, default=default)
 
 
 class GitConfig(Config):
@@ -62,7 +68,25 @@ class GitConfig(Config):
         Config.check_config(GitConfig.email, 'email', str, False)
 
 
-class AndroidBuildConfig(Config):
+class BuildConfig(Config, metaclass=abc.ABCMeta):
+    @staticmethod
+    def check_sub_class_configs(subclass):
+        Config.check_config(subclass.build_config, 'build_config', dict, False)
+        Config.check_config(subclass.build_type, 'build_type', str, False)
+        Config.check_config(subclass.export_type, 'export_type', str, False)
+        Config.check_config(subclass.tree_shake_icons, 'tree_shake_icons', bool)
+        Config.check_config(subclass.target, 'target', str)
+        Config.check_config(subclass.flavor, 'flavor', str)
+        Config.check_config(subclass.pub, 'pub', bool)
+        Config.check_config(subclass.build_number, 'build_number', str)
+        Config.check_config(subclass.build_name, 'build_name', str)
+        Config.check_config(subclass.split_debug_info, 'split_debug_info', str)
+        Config.check_config(subclass.obfuscate, 'obfuscate', bool)
+        Config.check_config(subclass.dart_define, 'dart_define', str)
+        Config.check_config(subclass.performance_measurement_file, 'performance_measurement_file', str)
+
+
+class AndroidBuildConfig(BuildConfig):
     # Android构建配置
     build_config = _configs.get('android_build_config')
     # 构建类型[debug|profile|release|自定义类型]
@@ -127,12 +151,14 @@ class AndroidBuildConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config.check_config(AndroidBuildConfig.build_config, 'build_config', dict, False)
-        Config.check_config(AndroidBuildConfig.build_type, 'build_type', str, False)
-        Config.check_config(AndroidBuildConfig.export_type, 'export_type', str, False)
+        BuildConfig.check_sub_class_configs(AndroidBuildConfig)
+        Config.check_config(AndroidBuildConfig.shrink, 'shrink', str)
+        Config.check_config(AndroidBuildConfig.target_platform, 'target_platform', str)
+        Config.check_config(AndroidBuildConfig.split_per_abi, 'split_per_abi', str)
+        Config.check_config(AndroidBuildConfig.track_widget_creation, 'track_widget_creation', bool)
 
 
-class IOSBuildConfig(Config):
+class IOSBuildConfig(BuildConfig):
     # iOS构建配置
     build_config = _configs.get('ios_build_config')
     # 构建类型[debug|profile|release]
@@ -193,9 +219,9 @@ class IOSBuildConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config.check_config(IOSBuildConfig.build_config, 'build_config', dict, False)
-        Config.check_config(IOSBuildConfig.build_type, 'build_type', str, False)
-        Config.check_config(IOSBuildConfig.export_type, 'export_type', str, False)
+        BuildConfig.check_sub_class_configs(IOSBuildConfig)
+        Config.check_config(IOSBuildConfig.simulator, 'simulator', bool)
+        Config.check_config(IOSBuildConfig.codesign, 'codesign', bool)
         Config.check_config(IOSBuildConfig.export_options, 'export_options', dict, False)
 
 
@@ -260,6 +286,16 @@ class PGYConfig(Config):
         Config.check_config(PGYConfig.url, 'url', str, False)
         Config.check_config(PGYConfig.api_key, 'api_key', str, False)
         Config.check_config(PGYConfig.user_key, 'user_key', str, False)
+        Config.check_config(PGYConfig.build_install_type, 'build_install_type', int)
+        Config.check_config(PGYConfig.build_password, 'build_password', str)
+        Config.check_config(PGYConfig.build_update_description, 'build_update_description', str)
+        Config.check_config(PGYConfig.build_name, 'build_name', str)
+        Config.check_config(PGYConfig.build_install_date, 'build_install_date', str)
+        Config.check_config(PGYConfig.build_install_start_date, 'build_install_start_date', str)
+        Config.check_config(PGYConfig.build_install_end_date, 'build_install_end_date', str)
+        Config.check_config(PGYConfig.build_channel_shortcut, 'build_channel_shortcut', str)
+        Config.check_config(PGYConfig.android_app_key, 'android_app_key', str)
+        Config.check_config(PGYConfig.ios_app_key, 'ios_app_key', str)
 
 
 class DingtalkConfig(Config):
@@ -286,6 +322,10 @@ class DingtalkConfig(Config):
         Config.check_config(DingtalkConfig.secret, 'secret', str, False)
         Config.check_config(DingtalkConfig.access_key, 'access_key', str, False)
         Config.check_config(DingtalkConfig.title, 'title', str, False)
+        Config.check_config(DingtalkConfig.is_at_all, 'is_at_all', bool)
+        Config.check_config(DingtalkConfig.at_mobiles, 'at_mobiles', list)
+        Config.check_config(DingtalkConfig.at_dingtalk_ids, 'at_dingtalk_ids', list)
+        Config.check_config(DingtalkConfig.is_auto_at, 'is_auto_at', bool)
 
 
 def check_configs():
