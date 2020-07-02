@@ -142,3 +142,4 @@ cython_debug/
 /weshop-business-app/
 /assets/ExportOptionsRelease.plist
 /assets/ExportOptionsDebug.plist
+/.idea
