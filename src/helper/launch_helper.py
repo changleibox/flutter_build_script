@@ -17,14 +17,15 @@ class LaunchHelper(object):
     def launch():
         sys.excepthook = LaunchHelper.__global_excepthook
 
+        log.verbose(configs.name)
+        log.verbose(configs.description)
+
         try:
+            utils.print_procossing('开始检查配置')
             configs.check_configs()
         except AssertionError as error:
             log.error(error)
             return
-
-        log.info(configs.name)
-        log.info(configs.description)
 
         if configs.git_enable:
             utils.print_procossing('开始拉取代码')

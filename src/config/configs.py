@@ -6,6 +6,7 @@
 import abc
 
 from src.config import configs_parser
+from src.util import log
 
 _configs = configs_parser.get_config()
 
@@ -30,6 +31,7 @@ class Config(metaclass=abc.ABCMeta):
     def _check_config(field, args_name):
         explain = '请在\'assets/configs.yaml\'文件中设置参数 %s' % args_name
         assert field, explain
+        log.info('%s：%s' % (args_name, field))
 
 
 class GitConfig(Config):
