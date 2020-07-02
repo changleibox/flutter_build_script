@@ -288,9 +288,6 @@ class DingtalkConfig(Config):
 
 
 def check_configs():
-    GitConfig.check_configs()
-    AndroidBuildConfig.check_configs()
-    IOSBuildConfig.check_configs()
-    AppStoreConfig.check_configs()
-    PGYConfig.check_configs()
-    DingtalkConfig.check_configs()
+    for subclass in Config.__subclasses__():
+        log.normal('\n****** %s ******' % subclass.__name__)
+        getattr(subclass, 'check_configs')()
