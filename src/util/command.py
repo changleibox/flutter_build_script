@@ -5,8 +5,11 @@
 # Created by changlei on 2020/6/29.
 import subprocess
 
+from src.util import log
+
 
 def call(cmd, cwd=None):
+    log.info('执行命令：%s' % cmd)
     return subprocess.call(cmd, shell=True, cwd=cwd)
 
 
