@@ -6,7 +6,7 @@
 import abc
 
 from src.config import configs_parser
-from src.util import log
+from src.util import print_procossing, log
 
 _configs = configs_parser.get_config()
 
@@ -28,7 +28,7 @@ class Config(metaclass=abc.ABCMeta):
     def check_configs(): ...
 
     @staticmethod
-    def _check_config(field, args_name):
+    def check_config(field, args_name):
         explain = '请在\'assets/configs.yaml\'文件中设置参数 %s' % args_name
         assert field, explain
         log.info('%s：%s' % (args_name, field))
@@ -52,13 +52,13 @@ class GitConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config._check_config(GitConfig.git_config, 'git_config')
-        Config._check_config(GitConfig.remote, 'remote')
-        Config._check_config(GitConfig.branch, 'branch')
-        Config._check_config(GitConfig.local_dir, 'local_dir')
-        Config._check_config(GitConfig.username, 'username')
-        Config._check_config(GitConfig.password, 'password')
-        Config._check_config(GitConfig.email, 'email')
+        Config.check_config(GitConfig.git_config, 'git_config')
+        Config.check_config(GitConfig.remote, 'remote')
+        Config.check_config(GitConfig.branch, 'branch')
+        Config.check_config(GitConfig.local_dir, 'local_dir')
+        Config.check_config(GitConfig.username, 'username')
+        Config.check_config(GitConfig.password, 'password')
+        Config.check_config(GitConfig.email, 'email')
 
 
 class AndroidBuildConfig(Config):
@@ -126,9 +126,9 @@ class AndroidBuildConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config._check_config(AndroidBuildConfig.build_config, 'build_config')
-        Config._check_config(AndroidBuildConfig.build_type, 'build_type')
-        Config._check_config(AndroidBuildConfig.export_type, 'export_type')
+        Config.check_config(AndroidBuildConfig.build_config, 'build_config')
+        Config.check_config(AndroidBuildConfig.build_type, 'build_type')
+        Config.check_config(AndroidBuildConfig.export_type, 'export_type')
 
 
 class IOSBuildConfig(Config):
@@ -192,10 +192,10 @@ class IOSBuildConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config._check_config(IOSBuildConfig.build_config, 'build_config')
-        Config._check_config(IOSBuildConfig.build_type, 'build_type')
-        Config._check_config(IOSBuildConfig.export_type, 'export_type')
-        Config._check_config(IOSBuildConfig.export_options, 'export_options')
+        Config.check_config(IOSBuildConfig.build_config, 'build_config')
+        Config.check_config(IOSBuildConfig.build_type, 'build_type')
+        Config.check_config(IOSBuildConfig.export_type, 'export_type')
+        Config.check_config(IOSBuildConfig.export_options, 'export_options')
 
 
 class AppStoreConfig(Config):
@@ -215,12 +215,12 @@ class AppStoreConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config._check_config(AppStoreConfig.app_store_config, 'app_store_config')
-        Config._check_config(AppStoreConfig.apple_id, 'apple_id')
-        Config._check_config(AppStoreConfig.type, 'type')
-        Config._check_config(AppStoreConfig.api_key, 'api_key')
-        Config._check_config(AppStoreConfig.api_issuer, 'api_issuer')
-        Config._check_config(AppStoreConfig.output_format, 'output_format')
+        Config.check_config(AppStoreConfig.app_store_config, 'app_store_config')
+        Config.check_config(AppStoreConfig.apple_id, 'apple_id')
+        Config.check_config(AppStoreConfig.type, 'type')
+        Config.check_config(AppStoreConfig.api_key, 'api_key')
+        Config.check_config(AppStoreConfig.api_issuer, 'api_issuer')
+        Config.check_config(AppStoreConfig.output_format, 'output_format')
 
 
 class PGYConfig(Config):
@@ -255,10 +255,10 @@ class PGYConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config._check_config(PGYConfig.pgy_config, 'pgy_config')
-        Config._check_config(PGYConfig.url, 'url')
-        Config._check_config(PGYConfig.api_key, 'api_key')
-        Config._check_config(PGYConfig.user_key, 'user_key')
+        Config.check_config(PGYConfig.pgy_config, 'pgy_config')
+        Config.check_config(PGYConfig.url, 'url')
+        Config.check_config(PGYConfig.api_key, 'api_key')
+        Config.check_config(PGYConfig.user_key, 'user_key')
 
 
 class DingtalkConfig(Config):
@@ -280,14 +280,20 @@ class DingtalkConfig(Config):
 
     @staticmethod
     def check_configs():
-        Config._check_config(DingtalkConfig.dingtalk_config, 'dingtalk_config')
-        Config._check_config(DingtalkConfig.url, 'url')
-        Config._check_config(DingtalkConfig.secret, 'secret')
-        Config._check_config(DingtalkConfig.access_key, 'access_key')
-        Config._check_config(DingtalkConfig.title, 'title')
+        Config.check_config(DingtalkConfig.dingtalk_config, 'dingtalk_config')
+        Config.check_config(DingtalkConfig.url, 'url')
+        Config.check_config(DingtalkConfig.secret, 'secret')
+        Config.check_config(DingtalkConfig.access_key, 'access_key')
+        Config.check_config(DingtalkConfig.title, 'title')
 
 
 def check_configs():
+    print_procossing('通用配置')
+    Config.check_config(name, 'name')
+    Config.check_config(description, 'description')
+    Config.check_config(git_enable, 'git_enable')
+    Config.check_config(android_enable, 'android_enable')
+    Config.check_config(ios_enable, 'ios_enable')
     for subclass in Config.__subclasses__():
-        log.normal('\n****** %s ******' % subclass.__name__)
+        print_procossing(subclass.__name__)
         getattr(subclass, 'check_configs')()
