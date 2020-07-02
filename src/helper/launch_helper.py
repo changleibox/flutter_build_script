@@ -20,6 +20,8 @@ class LaunchHelper(object):
         log.info(configs.name)
         log.info(configs.description)
 
+        configs.check_configs()
+
         if configs.git_enable:
             utils.print_procossing('开始拉取代码')
             git_helper = GitHelper()

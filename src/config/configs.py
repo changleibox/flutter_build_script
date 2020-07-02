@@ -3,6 +3,7 @@
 #  Copyright (c) 2020 CHANGLEI. All rights reserved.
 
 # Created by changlei on 2020/6/28.
+import abc
 
 from src.config import configs_parser
 
@@ -20,7 +21,18 @@ android_enable = _configs.get('android_enable', True)
 ios_enable = _configs.get('ios_enable', True)
 
 
-class GitConfig(object):
+class Config(metaclass=abc.ABCMeta):
+    @staticmethod
+    @abc.abstractmethod
+    def check_configs(): ...
+
+    @staticmethod
+    def _check_config(field, args_name):
+        explain = '请配置配置文件中设置参数 %s' % args_name
+        assert field, explain
+
+
+class GitConfig(Config):
     # git配置
     git_config = _configs.get('git_config')
     # git远程地址
@@ -36,8 +48,18 @@ class GitConfig(object):
     # git邮箱
     email = git_config.get('email')
 
+    @staticmethod
+    def check_configs():
+        Config._check_config(GitConfig.git_config, 'git_config')
+        Config._check_config(GitConfig.remote, 'remote')
+        Config._check_config(GitConfig.branch, 'branch')
+        Config._check_config(GitConfig.local_dir, 'local_dir')
+        Config._check_config(GitConfig.username, 'username')
+        Config._check_config(GitConfig.password, 'password')
+        Config._check_config(GitConfig.email, 'email')
 
-class AndroidBuildConfig(object):
+
+class AndroidBuildConfig(Config):
     # Android构建配置
     build_config = _configs.get('android_build_config')
     # 构建类型[debug|profile|release|自定义类型]
@@ -100,8 +122,14 @@ class AndroidBuildConfig(object):
     # （默认为打开）
     track_widget_creation = build_config.get('track_widget_creation')
 
+    @staticmethod
+    def check_configs():
+        Config._check_config(AndroidBuildConfig.build_config, 'build_config')
+        Config._check_config(AndroidBuildConfig.build_type, 'build_type')
+        Config._check_config(AndroidBuildConfig.export_type, 'export_type')
 
-class IOSBuildConfig(object):
+
+class IOSBuildConfig(Config):
     # iOS构建配置
     build_config = _configs.get('ios_build_config')
     # 构建类型[debug|profile|release]
@@ -160,8 +188,15 @@ class IOSBuildConfig(object):
     #   release: ExportOptionsRelease.plist
     export_options = build_config.get('export_options')
 
+    @staticmethod
+    def check_configs():
+        Config._check_config(IOSBuildConfig.build_config, 'build_config')
+        Config._check_config(IOSBuildConfig.build_type, 'build_type')
+        Config._check_config(IOSBuildConfig.export_type, 'export_type')
+        Config._check_config(IOSBuildConfig.export_options, 'export_options')
 
-class AppStoreConfig(object):
+
+class AppStoreConfig(Config):
     # AppStore配置 详情请查看文档：https://help.apple.com/itc/apploader/#/apdATD1E53-D1E1A1303-D1E53A1126
     app_store_config = _configs.get('app_store_config')
     # 您的用户名。
@@ -176,8 +211,17 @@ class AppStoreConfig(object):
     # [xml | normal]
     output_format = app_store_config.get('output_format')
 
+    @staticmethod
+    def check_configs():
+        Config._check_config(AppStoreConfig.app_store_config, 'app_store_config')
+        Config._check_config(AppStoreConfig.apple_id, 'apple_id')
+        Config._check_config(AppStoreConfig.type, 'type')
+        Config._check_config(AppStoreConfig.api_key, 'api_key')
+        Config._check_config(AppStoreConfig.api_issuer, 'api_issuer')
+        Config._check_config(AppStoreConfig.output_format, 'output_format')
 
-class PGYConfig(object):
+
+class PGYConfig(Config):
     # 蒲公英配置 详情请查看文档：https://www.pgyer.com/doc/view/api#paramInfo
     pgy_config = _configs.get('pgy_config')
     # 路径
@@ -207,8 +251,15 @@ class PGYConfig(object):
     # ios appKey
     ios_app_key = pgy_config.get('ios_app_key')
 
+    @staticmethod
+    def check_configs():
+        Config._check_config(PGYConfig.pgy_config, 'pgy_config')
+        Config._check_config(PGYConfig.url, 'url')
+        Config._check_config(PGYConfig.api_key, 'api_key')
+        Config._check_config(PGYConfig.user_key, 'user_key')
 
-class DingtalkConfig(object):
+
+class DingtalkConfig(Config):
     # 钉钉配置 详情请查看文档：https://ding-doc.dingtalk.com/doc#/serverapi2/elzz1p
     dingtalk_config = _configs.get('dingtalk_config')
     url = dingtalk_config.get('url')
@@ -224,3 +275,20 @@ class DingtalkConfig(object):
     at_dingtalk_ids = dingtalk_config.get('at_dingtalk_ids')
     # 是否自动在text内容末尾添加@手机号，默认自动添加，可设置为False取消（可选）
     is_auto_at = dingtalk_config.get('is_auto_at', True)
+
+    @staticmethod
+    def check_configs():
+        Config._check_config(DingtalkConfig.dingtalk_config, 'dingtalk_config')
+        Config._check_config(DingtalkConfig.url, 'url')
+        Config._check_config(DingtalkConfig.secret, 'secret')
+        Config._check_config(DingtalkConfig.access_key, 'access_key')
+        Config._check_config(DingtalkConfig.title, 'title')
+
+
+def check_configs():
+    GitConfig.check_configs()
+    AndroidBuildConfig.check_configs()
+    IOSBuildConfig.check_configs()
+    AppStoreConfig.check_configs()
+    PGYConfig.check_configs()
+    DingtalkConfig.check_configs()
