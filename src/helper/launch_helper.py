@@ -30,7 +30,9 @@ class LaunchHelper(object):
         if configs.git_enable:
             print_procossing('开始拉取代码')
             git_helper = GitHelper()
-            result = git_helper.clone()
+            result = git_helper.init()
+            if result == 0:
+                result = git_helper.clone()
             if result == 0:
                 result = git_helper.pull()
             if result != 0:

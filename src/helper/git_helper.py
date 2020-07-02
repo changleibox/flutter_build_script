@@ -26,6 +26,9 @@ class GitHelper(object):
         self.__git_env_call('git config --global user.email \'{}\''.format(self.__password))
         self.__git_env_call('git config --global user.password \'{}\''.format(self.__password))
 
+    def init(self):
+        return command.call('git init %s' % self.__local_path)
+
     def clone(self):
         if os.path.exists(self.__local_path) and not os.path.exists(Paths.yaml_path):
             os.rmdir(self.__local_path)
