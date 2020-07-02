@@ -10,7 +10,7 @@ from src.util import utils
 
 
 class Paths(object):
-    root_path = os.path.join(utils.root_path(), GitConfig.local_dir)
+    root_path = os.path.join(utils.root_path(), 'tmp', GitConfig.local_dir)
     yaml_path = os.path.join(root_path, 'pubspec.yaml')
     build_path = os.path.join(root_path, 'build')
     apk_path = os.path.join('app', 'outputs', 'flutter-apk')

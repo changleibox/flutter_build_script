@@ -143,3 +143,4 @@ cython_debug/
 /assets/ExportOptionsRelease.plist
 /assets/ExportOptionsDebug.plist
 /.idea
+/tmp

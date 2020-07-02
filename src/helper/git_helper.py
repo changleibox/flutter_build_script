@@ -4,6 +4,7 @@
 
 # Created by changlei on 2020/6/30.
 import os
+import shutil
 
 from src.config import GitConfig, Paths
 from src.util import command, utils
@@ -31,7 +32,7 @@ class GitHelper(object):
 
     def clone(self):
         if os.path.exists(self.__local_path) and not os.path.exists(Paths.yaml_path):
-            os.rmdir(self.__local_path)
+            shutil.rmtree(self.__local_path)
         if not os.path.exists(self.__local_path):
             return command.call('git clone -b %s %s %s' % (self.__branch, self.__remote, self.__local_path))
         return 0
