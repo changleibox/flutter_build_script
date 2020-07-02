@@ -13,11 +13,9 @@ class Builder(metaclass=abc.ABCMeta):
     _ROOT_PATH = Paths.root_path
     _BUILD_PATH = Paths.build_path
 
-    def __init__(self, uploader):
+    def __init__(self, name, uploader):
+        self.name = name
         self.uploader = uploader
-
-    @abc.abstractmethod
-    def name(self): ...
 
     @abc.abstractmethod
     def build(self, build_type): ...

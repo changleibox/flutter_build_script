@@ -23,10 +23,7 @@ class IOSBuilder(Builder):
     ]
 
     def __init__(self):
-        super(IOSBuilder, self).__init__(IOSUploader())
-
-    def name(self):
-        return 'iOS'
+        super(IOSBuilder, self).__init__(IOSUploader(), 'iOS')
 
     def build(self, build_type):
         return self.__xcodebuild_build(build_type)

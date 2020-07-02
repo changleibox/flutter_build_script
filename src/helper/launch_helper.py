@@ -44,7 +44,7 @@ class LaunchHelper(object):
             result = builder.release()
             if result is None or result['code'] != 0:
                 continue
-            result_dict[builder.name()] = result
+            result_dict[builder.name] = result
 
         if len(result_dict) > 0:
             chatbot_helper = ChatbotHelper()

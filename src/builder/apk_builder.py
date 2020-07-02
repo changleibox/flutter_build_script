@@ -13,10 +13,7 @@ from src.util import CommandBuilder
 
 class ApkBuilder(Builder):
     def __init__(self):
-        super(ApkBuilder, self).__init__(ApkUploader())
-
-    def name(self):
-        return 'Android'
+        super(ApkBuilder, self).__init__(ApkUploader(), 'Android')
 
     def build(self, build_type):
         assert build_type is not None
