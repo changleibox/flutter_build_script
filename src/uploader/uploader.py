@@ -42,8 +42,8 @@ class Uploader(metaclass=abc.ABCMeta):
         files = {
             'file': open(app_path, 'rb')
         }
-        log.debug('正在上传……')
+        log.info('正在上传%s' % app_path)
         response = requests.post(PGYConfig.url, params=params, files=files)
         result = response.json()
-        log.debug('上传完成 %s' % result)
+        log.info('上传完成：%s' % result)
         return response.json()
