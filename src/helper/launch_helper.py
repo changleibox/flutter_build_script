@@ -61,8 +61,6 @@ class LaunchHelper(object):
             print_procossing('构建完成，正在通知测试人员')
             chatbot_helper = ChatbotHelper()
             chatbot_helper.notify(result_dict)
-        else:
-            log.error('构建失败，请检查后重试')
 
     @staticmethod
     def __global_excepthook(exctype, value, traceback):

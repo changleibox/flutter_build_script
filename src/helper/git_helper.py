@@ -41,6 +41,7 @@ class GitHelper(object):
         if not os.path.exists(self.__local_path):
             utils.print_path_not_exist(self.__local_path)
             return -1
+        self.__git_env_call('git status && git log --stat')
         # 更新 检出分支 并拉取最新代码，cwd为git目录
         result = self.__git_env_call('git fetch --all')
         if result == 0:
