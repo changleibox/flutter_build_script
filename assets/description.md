@@ -1,6 +1,7 @@
 ## {appName}-{platform}版
 
 版本：{buildVersion} (build {buildBuildVersion}) 大小：{buildFileSize} 更新时间：{buildUpdated}
+***
 
 #### 用手机扫描二维码安装  
 ![二维码]({buildQRCodeURL})  
