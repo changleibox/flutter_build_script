@@ -6,7 +6,8 @@
 import abc
 import os
 
-from src.config import configs_parser, Paths
+from src.config import configs_parser
+from src.system import Paths
 from src.util import print_procossing, log
 
 _configs = configs_parser.get_config()
@@ -330,14 +331,23 @@ class DingtalkConfig(Config):
 
 
 class PathConfig(object):
+    # 源码根目录
     root_path = os.path.join(Paths.sources_dir, GitConfig.local_dir)
+    # Flutter配置文件
     yaml_path = os.path.join(root_path, 'pubspec.yaml')
+    # build文件夹
     build_path = os.path.join(root_path, 'build')
+    # apk输出路径
     apk_export_path = os.path.join(build_path, 'app', 'outputs', 'flutter-apk')
+    # Flutter项目iOS的target名
     target_name = 'Runner'
+    # xcworkspace路径
     xcworkspace_path = os.path.join(root_path, 'ios', '%s.xcworkspace' % target_name)
+    # 生成的xcarchive路径
     xcarchive_path = os.path.join(build_path, 'ios', 'iphoneos', '%s.xcarchive' % target_name)
+    # iap导出路径的文件名
     ipa_export_path = os.path.join(build_path, 'ios', 'iphoneos', target_name)
+    # ipa路径
     ipa_path = os.path.join(ipa_export_path, '%s.ipa' % target_name)
 
 

@@ -8,7 +8,7 @@ import os
 
 import yaml
 
-from src.config import Paths
+from src.system import Paths
 
 
 def __resolve_configs_file():

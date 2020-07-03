@@ -5,20 +5,21 @@
 # Created by changlei on 2020/6/23.
 import abc
 
-from src.config import Paths
+from src.config import PathConfig
 from src.util import command
 
 
 class Builder(metaclass=abc.ABCMeta):
-    _ROOT_PATH = Paths.root_path
-    _BUILD_PATH = Paths.build_path
+    _ROOT_PATH = PathConfig.root_path
+    _BUILD_PATH = PathConfig.build_path
 
     def __init__(self, name, uploader):
         self.name = name
         self.uploader = uploader
 
     @abc.abstractmethod
-    def build(self, build_type): ...
+    def build(self, build_type):
+        ...
 
     def clean(self):
         self._env_call('flutter clean')
@@ -45,4 +46,4 @@ class Builder(metaclass=abc.ABCMeta):
 
     @staticmethod
     def _env_call(cmd):
-        return command.call(cmd, cwd=Paths.root_path)
+        return command.call(cmd, cwd=PathConfig.root_path)

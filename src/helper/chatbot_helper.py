@@ -5,8 +5,9 @@
 # Created by changlei on 2020/6/28.
 import os
 
-from src.config import PGYConfig, DingtalkConfig, Paths
+from src.config import PGYConfig, DingtalkConfig
 from src.plugin import DingtalkChatbot
+from src.system import Paths
 from src.util import utils, log
 
 

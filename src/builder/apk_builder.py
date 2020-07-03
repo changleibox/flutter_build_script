@@ -6,7 +6,7 @@
 import os
 
 from src.builder import Builder
-from src.config import AndroidBuildConfig, Paths
+from src.config import AndroidBuildConfig, PathConfig
 from src.uploader import ApkUploader
 from src.util import CommandBuilder
 
@@ -19,7 +19,7 @@ class ApkBuilder(Builder):
         assert build_type is not None
         result = self._env_call(self.__flutter_build_command(build_type))
         if result == 0:
-            return os.path.join(Paths.apk_export_path, 'app-%s.apk' % build_type)
+            return os.path.join(PathConfig.apk_export_path, 'app-%s.apk' % build_type)
         else:
             raise ValueError('打包失败，请检查后重试')
 

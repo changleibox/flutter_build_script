@@ -6,7 +6,7 @@
 import os
 import shutil
 
-from src.config import GitConfig, Paths
+from src.config import GitConfig, PathConfig
 from src.util import command, utils
 
 
@@ -14,7 +14,7 @@ class GitHelper(object):
     def __init__(self):
         self.__remote = GitConfig.remote
         self.__branch = GitConfig.branch
-        self.__local_path = Paths.root_path
+        self.__local_path = PathConfig.root_path
         self.__username = GitConfig.username
         self.__password = GitConfig.password
         self.__email = GitConfig.email
@@ -31,7 +31,7 @@ class GitHelper(object):
         return command.call('git init %s' % self.__local_path)
 
     def clone(self):
-        if os.path.exists(self.__local_path) and not os.path.exists(Paths.yaml_path):
+        if os.path.exists(self.__local_path) and not os.path.exists(PathConfig.yaml_path):
             shutil.rmtree(self.__local_path)
         if not os.path.exists(self.__local_path):
             return command.call('git clone -b %s %s %s' % (self.__branch, self.__remote, self.__local_path))

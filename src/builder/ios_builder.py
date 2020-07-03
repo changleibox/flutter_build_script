@@ -7,7 +7,8 @@ import os
 
 import src.util as utils
 from src.builder import Builder
-from src.config import IOSBuildConfig, Paths
+from src.config import IOSBuildConfig, PathConfig
+from src.system import Paths
 from src.uploader.ios_uploader import IOSUploader
 from src.util.command import CommandBuilder
 
@@ -45,9 +46,9 @@ class IOSBuilder(Builder):
             result = self._env_call(self.__xcodebuild_archive_command(build_type))
             if result == 0:
                 result = self._env_call(self.__xcodebuild_export_archive_command(build_type))
-            if result != 0 or not os.path.exists(Paths.ipa_path):
+            if result != 0 or not os.path.exists(PathConfig.ipa_path):
                 raise ValueError('打包失败，请检查后重试')
-            return Paths.ipa_path
+            return PathConfig.ipa_path
 
     def __pod_install(self):
         self._env_call('cd ios && pod install')
@@ -80,8 +81,8 @@ class IOSBuilder(Builder):
     def __xcodebuild_clean_command(build_type):
         assert build_type, 'build_type 不能为空'
         return CommandBuilder('xcodebuild clean', prefix='-') \
-            .append('workspace', Paths.xcworkspace_path) \
-            .append('scheme', Paths.target_name) \
+            .append('workspace', PathConfig.xcworkspace_path) \
+            .append('scheme', PathConfig.target_name) \
             .append('configuration', build_type) \
             .to_command()
 
@@ -89,10 +90,10 @@ class IOSBuilder(Builder):
     def __xcodebuild_archive_command(build_type):
         assert build_type, 'build_type 不能为空'
         return CommandBuilder('xcodebuild archive', prefix='-') \
-            .append('workspace', Paths.xcworkspace_path) \
-            .append('scheme', Paths.target_name) \
+            .append('workspace', PathConfig.xcworkspace_path) \
+            .append('scheme', PathConfig.target_name) \
             .append('configuration', build_type) \
-            .append('archivePath', Paths.xcarchive_path) \
+            .append('archivePath', PathConfig.xcarchive_path) \
             .to_command()
 
     @staticmethod
@@ -102,7 +103,7 @@ class IOSBuilder(Builder):
         assert export_options_name, 'export_options_name 不能为空，请在配置文件设置你的exportOptionsPlist'
         export_options_plist_path = os.path.join(Paths.assets_dir, export_options_name)
         return CommandBuilder('xcodebuild -exportArchive', prefix='-') \
-            .append('archivePath', Paths.xcarchive_path) \
-            .append('exportPath', Paths.ipa_export_path) \
+            .append('archivePath', PathConfig.xcarchive_path) \
+            .append('exportPath', PathConfig.ipa_export_path) \
             .append('exportOptionsPlist', export_options_plist_path) \
             .to_command()

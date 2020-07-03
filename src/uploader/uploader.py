@@ -9,7 +9,8 @@ import shutil
 
 import requests
 
-from src.config import PGYConfig, Paths
+from src.config import PGYConfig
+from src.system import Paths
 from src.util import log
 
 
