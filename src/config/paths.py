@@ -19,4 +19,4 @@ class Paths(object):
     xcarchive_path = os.path.join(build_path, 'ios', 'iphoneos', '%s.xcarchive' % target_name)
     ipa_export_path = os.path.join(build_path, 'ios', 'iphoneos', '%s' % target_name)
     ipa_path = os.path.join(ipa_export_path, '%s.ipa' % target_name)
-    export_dir = os.path.join(utils.root_path(), 'tmp', 'output')
+    export_dir = os.path.join(utils.root_path(), 'tmp', 'outputs')
