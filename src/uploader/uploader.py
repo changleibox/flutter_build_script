@@ -35,10 +35,10 @@ class Uploader(metaclass=abc.ABCMeta):
 
     @staticmethod
     def _upload_export(app_path):
-        if not os.path.exists(Paths.export_dir):
-            os.makedirs(Paths.export_dir)
+        if not os.path.exists(Paths.outputs_dir):
+            os.makedirs(Paths.outputs_dir)
         app_dir = os.path.dirname(app_path)
-        export_dir = os.path.join(Paths.export_dir, os.path.basename(app_dir))
+        export_dir = os.path.join(Paths.outputs_dir, os.path.basename(app_dir))
         if os.path.exists(export_dir):
             shutil.rmtree(export_dir)
         shutil.copytree(app_dir, export_dir)
