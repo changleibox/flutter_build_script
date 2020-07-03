@@ -139,7 +139,6 @@ dmypy.json
 cython_debug/
 
 /assets/configs.yaml
-/weshop-business-app/
 /assets/ExportOptionsRelease.plist
 /assets/ExportOptionsDebug.plist
 /.idea

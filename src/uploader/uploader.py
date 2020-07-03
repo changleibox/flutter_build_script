@@ -36,9 +36,13 @@ class Uploader(metaclass=abc.ABCMeta):
     @staticmethod
     def _upload_export(app_path):
         if not os.path.exists(Paths.export_dir):
-            os.mkdir(Paths.export_dir)
-        shutil.copy(app_path, Paths.export_dir)
-        export_path = os.path.join(Paths.export_dir, os.path.basename(app_path))
+            os.makedirs(Paths.export_dir)
+        app_dir = os.path.dirname(app_path)
+        export_dir = os.path.join(Paths.export_dir, os.path.basename(app_dir))
+        if os.path.exists(export_dir):
+            shutil.rmtree(export_dir)
+        shutil.copytree(app_dir, export_dir)
+        export_path = os.path.join(export_dir, os.path.basename(app_path))
         if os.path.exists(export_path):
             log.debug('已成功导出到：%s' % export_path)
         else:
