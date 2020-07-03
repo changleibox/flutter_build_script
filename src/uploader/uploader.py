@@ -4,10 +4,12 @@
 
 # Created by changlei on 2020/6/23.
 import abc
+import os
+import shutil
 
 import requests
 
-from src.config import PGYConfig
+from src.config import PGYConfig, Paths
 from src.util import log
 
 
@@ -31,9 +33,16 @@ class Uploader(metaclass=abc.ABCMeta):
     def _upload_app_store(self, app_path):
         ...
 
-    @abc.abstractmethod
-    def _upload_export(self, app_path):
-        ...
+    @staticmethod
+    def _upload_export(app_path):
+        if not os.path.exists(Paths.export_dir):
+            os.mkdir(Paths.export_dir)
+        shutil.copy(app_path, Paths.export_dir)
+        export_path = os.path.join(Paths.export_dir, os.path.basename(app_path))
+        if os.path.exists(export_path):
+            log.debug('已成功导出到：%s' % export_path)
+        else:
+            log.debug('导出失败，请稍后重试')
 
     @staticmethod
     def _upload_pgy(app_path):

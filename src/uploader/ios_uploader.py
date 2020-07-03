@@ -3,6 +3,7 @@
 #  Copyright (c) 2020 CHANGLEI. All rights reserved.
 
 # Created by changlei on 2020/6/24.
+
 from src.config import IOSBuildConfig
 from src.publisher import IOSPublisher
 from src.uploader import Uploader
@@ -20,6 +21,3 @@ class IOSUploader(Uploader):
             self.__publisher.upload(app_path)
         else:
             log.debug('%s方式不支持上传到AppStore' % build_type)
-
-    def _upload_export(self, app_path):
-        log.debug('已成功导出到：%s' % app_path)
