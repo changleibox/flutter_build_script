@@ -5,7 +5,7 @@
 # Created by changlei on 2020/6/28.
 import os
 
-from src.config import PGYConfig, DingtalkConfig
+from src.config import PGYConfig, DingtalkConfig, Paths
 from src.plugin import DingtalkChatbot
 from src.util import utils, log
 
@@ -13,7 +13,7 @@ from src.util import utils, log
 class ChatbotHelper(object):
     def __init__(self):
         self.chatbot = DingtalkChatbot()
-        with open(os.path.join(utils.root_path(), 'assets', 'description.md'), 'r', encoding='utf-8') as file:
+        with open(os.path.join(Paths.assets_dir, 'description.md'), 'r', encoding='utf-8') as file:
             self.mark_down_text = file.read()
 
     def notify(self, result_dict):

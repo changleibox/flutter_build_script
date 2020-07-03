@@ -8,20 +8,17 @@ import os
 
 import yaml
 
-from src.util import utils
-
-__config_template_path = os.path.join(utils.root_path(), 'assets', 'configs.json')
-__config_path = os.path.join(utils.root_path(), 'assets', 'configs.yaml')
+from src.config import Paths
 
 
 def __resolve_configs_file():
-    with open(__config_path, 'r', encoding='utf-8') as f:
+    with open(Paths.config_path, 'r', encoding='utf-8') as f:
         return yaml.safe_load(f)
 
 
 def __create_config_file():
-    with open(__config_path, 'w', encoding='utf-8') as f, \
-            open(__config_template_path, 'r', encoding='utf-8') as template:
+    with open(Paths.config_path, 'w', encoding='utf-8') as f, \
+            open(Paths.config_template_path, 'r', encoding='utf-8') as template:
         yaml.safe_dump(
             data=json.loads(template.read()),
             stream=f,
@@ -33,6 +30,6 @@ def __create_config_file():
 
 
 def get_config():
-    if not os.path.exists(__config_path):
+    if not os.path.exists(Paths.config_path):
         __create_config_file()
     return __resolve_configs_file()

@@ -4,8 +4,9 @@
 
 # Created by changlei on 2020/6/28.
 import abc
+import os
 
-from src.config import configs_parser
+from src.config import configs_parser, Paths
 from src.util import print_procossing, log
 
 _configs = configs_parser.get_config()
@@ -326,6 +327,18 @@ class DingtalkConfig(Config):
         Config.checkattr(DingtalkConfig.at_mobiles, 'at_mobiles', list)
         Config.checkattr(DingtalkConfig.at_dingtalk_ids, 'at_dingtalk_ids', list)
         Config.checkattr(DingtalkConfig.is_auto_at, 'is_auto_at', bool)
+
+
+class PathConfig(object):
+    root_path = os.path.join(Paths.sources_dir, GitConfig.local_dir)
+    yaml_path = os.path.join(root_path, 'pubspec.yaml')
+    build_path = os.path.join(root_path, 'build')
+    apk_export_path = os.path.join(build_path, 'app', 'outputs', 'flutter-apk')
+    target_name = 'Runner'
+    xcworkspace_path = os.path.join(root_path, 'ios', '%s.xcworkspace' % target_name)
+    xcarchive_path = os.path.join(build_path, 'ios', 'iphoneos', '%s.xcarchive' % target_name)
+    ipa_export_path = os.path.join(build_path, 'ios', 'iphoneos', target_name)
+    ipa_path = os.path.join(ipa_export_path, '%s.ipa' % target_name)
 
 
 def check_configs():
