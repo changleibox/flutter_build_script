@@ -1,6 +1,9 @@
 # flutter_build_script
 Flutter项目自动打包上线脚本
 
+### Python环境
+Python 3.7
+
 ### 三方库
 ```
 PyYAML
