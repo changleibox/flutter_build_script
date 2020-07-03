@@ -33,7 +33,7 @@ class Config(metaclass=abc.ABCMeta):
     @staticmethod
     def checkattr(args, args_name, args_type, nullable=True):
         if not nullable:
-            assert args, '请在\'assets/configs.yaml\'文件中设置参数 %s' % args_name
+            assert args is not None, '请在\'assets/configs.yaml\'文件中设置参数 %s' % args_name
         if args is not None:
             assert type(args) == args_type, '%s 类型错误 %s，应该是 %s类型' % (args_name, type(args), args_type)
         log.info('%s：%s' % (args_name, args))
