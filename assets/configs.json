@@ -45,7 +45,10 @@
     "performance_measurement_file": "xxx",
     "simulator": true,
     "codesign": true,
-    "export_options": {}
+    "export_options": {
+      "debug": "xxx",
+      "release": "xxx"
+    }
   },
   "app_store_config": {
     "apple_id": "xxx",
@@ -58,7 +61,7 @@
     "url": "xxx",
     "_api_key": "xxx",
     "user_key": "xxx",
-    "build_install_type": "xxx",
+    "build_install_type": 1,
     "build_password": "xxx",
     "build_update_description": "xxx",
     "build_name": "xxx",
