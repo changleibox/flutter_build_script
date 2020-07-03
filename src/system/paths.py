@@ -16,6 +16,7 @@ class Paths(object):
     outputs_dir = os.path.join(tmp_dir, 'outputs')
     # 存放项目源码
     sources_dir = os.path.join(tmp_dir, 'sources')
-
+    # 配置文件模板路径
     config_template_path = os.path.join(assets_dir, 'configs.json')
+    # 配置文件路径
     config_path = os.path.join(assets_dir, 'configs.yaml')
