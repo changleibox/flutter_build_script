@@ -4,6 +4,7 @@
 
 # Created by changlei on 2020/6/28.
 import os
+import sys
 import time
 import zipfile
 
@@ -91,8 +92,19 @@ def convert_time(datetime_str):
 
 
 def root_path():
-    project_name = 'automator'
-    return os.path.join(os.path.abspath(__file__).split(project_name)[0], project_name)
+    # 判断调试模式
+    debug_vars = dict((a, b) for a, b in os.environ.items() if a.find('IPYTHONENABLE') >= 0)
+    # 根据不同场景获取根目录
+    if len(debug_vars) > 0:
+        """当前为debug运行时"""
+        path = sys.path[2]
+    elif getattr(sys, 'frozen', False):
+        """当前为exe运行时"""
+        path = os.getcwd()
+    else:
+        """正常执行"""
+        path = sys.path[1]
+    return path
 
 
 def print_path_not_exist(path):
@@ -108,3 +120,4 @@ def print_procossing(text):
 if __name__ == '__main__':
     print(convert_fuke_size(71025065))
     print(convert_time('2020-06-29 14:57:00'))
+    print(root_path())
