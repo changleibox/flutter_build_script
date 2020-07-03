@@ -18,4 +18,4 @@ class ApkUploader(Uploader):
         return self.__publisher.upload(app_path)
 
     def _upload_export(self, app_path):
-        log.debug('已成功导出到： %s' % app_path)
+        log.debug('已成功导出到：%s' % app_path)
