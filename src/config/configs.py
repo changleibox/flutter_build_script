@@ -154,7 +154,7 @@ class AndroidBuildConfig(BuildConfig):
     @staticmethod
     def check_configs():
         BuildConfig.check_sub_class_configs(AndroidBuildConfig)
-        Config.checkattr(AndroidBuildConfig.shrink, 'shrink', str)
+        Config.checkattr(AndroidBuildConfig.shrink, 'shrink', bool)
         Config.checkattr(AndroidBuildConfig.target_platform, 'target_platform', str)
         Config.checkattr(AndroidBuildConfig.split_per_abi, 'split_per_abi', str)
         Config.checkattr(AndroidBuildConfig.track_widget_creation, 'track_widget_creation', bool)
