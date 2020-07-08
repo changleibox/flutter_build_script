@@ -69,7 +69,7 @@
     "build_install_start_date": "xxx",
     "build_install_end_date": "xxx",
     "build_channel_shortcut": "xxx",
-    "android_app_aey": "xxx",
+    "android_app_key": "xxx",
     "ios_app_key": "xxx"
   },
   "dingtalk_config": {
